@@ -60,7 +60,7 @@ import org.rfid.libdanrfid.DDMTag;
  */
 public class NfcBookReader extends Activity {
 
-	private static final String TAG = "TagViewer";
+	private static final String TAG = "NFCBookReader";
 
     private NfcAdapter mAdapter;
     private PendingIntent mPendingIntent;
@@ -203,7 +203,7 @@ public class NfcBookReader extends Activity {
 
         }
     }
-
+    
     private String dumpTagData(Parcelable p) {
         StringBuilder sb = new StringBuilder();
         Tag tag = (Tag) p;
@@ -241,6 +241,9 @@ public class NfcBookReader extends Activity {
     				};
     				byte[] systeminfo = nfcvTag.transceive(cmd);
 
+    				// Chop off the initial 0x00 byte:
+    				systeminfo = Arrays.copyOfRange(systeminfo, 1, 15);
+
     				// Read first 8 blocks containing the 32 byte of userdata defined in the Danish model
     				cmd = new byte[] { 
     					(byte)0x00, // Flags
@@ -276,9 +279,7 @@ public class NfcBookReader extends Activity {
     		        currentBarcode = danishTag.Barcode();
     		        
                     url = "http://labs.biblionaut.net/basic_info/?strekkode=" + currentBarcode;
-                    webview.loadUrl(url);  
-
-
+                    webview.loadUrl(url);
     		        
     			} catch (IOException e) {
         			sb.append('\n');
