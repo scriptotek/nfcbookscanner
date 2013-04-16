@@ -36,6 +36,7 @@ import android.nfc.tech.NfcV;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.widget.TextView;
+import android.widget.ImageView;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.net.Uri;
@@ -51,7 +52,7 @@ import no.scriptotek.nfcbookscanner.R.id;
 import no.scriptotek.nfcbookscanner.R.layout;
 import no.scriptotek.nfcbookscanner.R.string;
 
-import org.rfid.libdanrfid.DDMData;
+import org.rfid.libdanrfid.DDMTag;
 
 
 /**
@@ -115,6 +116,9 @@ public class NfcBookReader extends Activity {
             } 
         });
         goButton.setVisibility(View.GONE);
+
+		ImageView iv1 = (ImageView) findViewById(R.id.imageView1);
+		iv1.setVisibility(View.GONE);
         
         mDialog = new AlertDialog.Builder(this).setNeutralButton("Ok", null).create();
 
@@ -224,27 +228,46 @@ public class NfcBookReader extends Activity {
         		try {        			
             		nfcvTag.connect();
         		} catch (IOException e) {
-            		sb.append("Klarte ikke ???pne en tilkobling!\n");
+            		sb.append("Klarte ikke åpne en tilkobling!\n");
             		return sb.toString();
         		}
     			
     			try {
 
+    				// Get system information (0x2B)
+    				byte[] cmd = new byte[] {
+    					(byte)0x00, // Flags
+    					(byte)0x2B // Command: Get system information
+    				};
+    				byte[] systeminfo = nfcvTag.transceive(cmd);
+
     				// Read first 8 blocks containing the 32 byte of userdata defined in the Danish model
-    				byte[] cmd = new byte[] { 
+    				cmd = new byte[] { 
     					(byte)0x00, // Flags
     					(byte)0x23, // Command: Read multiple blocks
     					(byte)0x00, // First block (offset)
     					(byte)0x08  // Number of blocks
     				};
-    				byte[] response = nfcvTag.transceive(cmd);
-    				
+    				byte[] userdata = nfcvTag.transceive(cmd);
+
     				// Chop off the initial 0x00 byte:
-    				response = Arrays.copyOfRange(response, 1, 32);
+    				userdata = Arrays.copyOfRange(userdata, 1, 32);
+
+    				// Parse the data using the DDMTag class:
+    				DDMTag danishTag = new DDMTag();
+    				danishTag.addSystemInformation(systeminfo);
+    				danishTag.addUserData(userdata);
     				
-    				// Parse the data using the DDMData class:
-    				DDMData danishTag = new DDMData(response);
-    		        textView1.setText(danishTag.Barcode());
+					ImageView iv1 = (ImageView) findViewById(R.id.imageView1);
+					iv1.setVisibility(View.VISIBLE);
+
+    				if (danishTag.isAFIsecured()) {
+    	    			iv1.setImageResource(R.drawable.lock_closed);
+    				} else {
+    	    			iv1.setImageResource(R.drawable.lock_open);
+    				}
+
+    				textView1.setText(danishTag.Barcode());
     		        textView2.setText(danishTag.Country());
     		        textView3.setText(danishTag.ISIL());
 

@@ -30,7 +30,8 @@
 
 	<TableLayout
 	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content" >
+	    android:layout_height="wrap_content"
+	    android:stretchColumns="2" >
 
 	    <TableRow
 	        android:id="@+id/tableRow1"
@@ -52,6 +53,13 @@
 	            android:padding="3dp"
 	            android:textIsSelectable="true"
 	            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+	        <ImageView
+	            android:id="@+id/imageView1"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="right"
+	            android:src="@drawable/lock_closed" />
 
 	    </TableRow>
 	    
