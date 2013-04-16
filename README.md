@@ -11,6 +11,7 @@ Only reading tags is currently implemented, but writing could easily be implemen
 method used for reading. 
 The necessary ISO 15693 commands can be found e.g. [here](http://www.ti.com/lit/an/sloa141/sloa141.pdf).
 
-To import this project into Eclipse/ADT, use `File→Import…`, and then either `Android→Existing Android Code Into Workspace` to add your local copy or `Git→Projects from Git` to grab it right off GitHub. Don't forget to get the libdanrfid submodule.
+To import this project into Eclipse/ADT, use `File→Import…`, and then either `Android→Existing Android Code Into Workspace` to add your local copy or `Git→Projects from Git` to grab it right off GitHub. Don't forget to get the libdanrfid submodule. You may have to right-click the imported project and run `Android Tools→Fix Project Properties`.
 
 ![Screenshot](http://hostr.co/file/mQMqgr0w0PQu/nfcbookscanner.png)
+

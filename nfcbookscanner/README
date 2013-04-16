@@ -1,7 +1,0 @@
-NFC Book Scanner is a simple NFC reader project for Android 
-to read Danish model library data from NfcV (ISO 15693) tags.
-by Dan Michael O. Heggø, 2013
-
-Code based on sample code from the Android SDK, 
-NFC Reader <https://github.com/nadam/nfc-reader#readme>
-and libdanrfid <https://code.google.com/p/libdanrfid/>
