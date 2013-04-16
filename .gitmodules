@@ -1,0 +1,3 @@
+[submodule "libdanrfid"]
+	path = libdanrfid
+	url = https://code.google.com/p/libdanrfid
