@@ -60,7 +60,7 @@ import org.rfid.libdanrfid.DDMTag;
  */
 public class NfcBookReader extends Activity {
 
-	private static final String TAG = "NFCBookReader";
+    private static final String TAG = "NFCBookReader";
 
     private NfcAdapter mAdapter;
     private PendingIntent mPendingIntent;
@@ -79,6 +79,7 @@ public class NfcBookReader extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i(TAG, "Called onCreate");
         setContentView(R.layout.main);
 
         //mTagContent = (LinearLayout) findViewById(R.id.list);
@@ -100,13 +101,13 @@ public class NfcBookReader extends Activity {
             public void onClick(View v){
                 url = "http://labs.biblionaut.net/basic_info/?strekkode=" + currentBarcode;
                 u = Uri.parse(url);
-            	/*
+                /*
                 try {
-                	// Start the activity
+                    // Start the activity
                     i.setData(u);
                     startActivity(i);
                 } catch (ActivityNotFoundException e) {
-                	// Raise on activity not found
+                    // Raise on activity not found
                     Toast.makeText(context, "Browser not found.", Toast.LENGTH_SHORT);
                 }
                 */
@@ -117,8 +118,8 @@ public class NfcBookReader extends Activity {
         });
         goButton.setVisibility(View.GONE);
 
-		ImageView iv1 = (ImageView) findViewById(R.id.imageView1);
-		iv1.setVisibility(View.GONE);
+        ImageView iv1 = (ImageView) findViewById(R.id.imageView1);
+        iv1.setVisibility(View.GONE);
         
         mDialog = new AlertDialog.Builder(this).setNeutralButton("Ok", null).create();
 
@@ -134,9 +135,9 @@ public class NfcBookReader extends Activity {
 /*
     @Override
     public void onBackPressed() {
-    	// do something on back.
-    	Log.i(TAG, "back button pressed");
-    	return;
+        // do something on back.
+        Log.i(TAG, "back button pressed");
+        return;
     }*/
 
     @Override
@@ -145,7 +146,7 @@ public class NfcBookReader extends Activity {
             switch(keyCode) {
             case KeyEvent.KEYCODE_BACK:
                 if(webview.canGoBack() == true){
-                	webview.goBack();
+                    webview.goBack();
                 } else {
                     finish();
                 }
@@ -165,6 +166,7 @@ public class NfcBookReader extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        Log.i(TAG, "Called onResume");
         if (mAdapter != null) {
             if (!mAdapter.isEnabled()) {
                 showMessage(R.string.error, R.string.nfc_disabled);
@@ -177,7 +179,7 @@ public class NfcBookReader extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        Log.i(TAG, "on pause");
+        Log.i(TAG, "Called onPause");
         if (mAdapter != null) {
             mAdapter.disableForegroundDispatch(this);
             //mAdapter.disableForegroundNdefPush(this);
@@ -185,9 +187,9 @@ public class NfcBookReader extends Activity {
     }
 
     private void resolveIntent(Intent intent) {
-    	String action = intent.getAction();
-        //Log.i(TAG, action);
-        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)) {
+        String action = intent.getAction();
+        Log.i(TAG, action);
+        if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(action)) {
             
             NdefMessage[] msgs;
 
@@ -217,86 +219,86 @@ public class NfcBookReader extends Activity {
         final TextView textView3 = (TextView) findViewById(R.id.textView32);
                 
         for (String tech : tag.getTechList()) {
-            
-        	if (tech.equals(NfcV.class.getName())) {
-        		
-        		sb.append('\n');
-        		
-        		// Get an instance of NfcV for the given tag:
-        		NfcV nfcvTag = NfcV.get(tag);
 
-        		try {        			
-            		nfcvTag.connect();
-        		} catch (IOException e) {
-            		sb.append("Klarte ikke åpne en tilkobling!\n");
-            		return sb.toString();
-        		}
-    			
-    			try {
+            if (tech.equals(NfcV.class.getName())) {
 
-    				// Get system information (0x2B)
-    				byte[] cmd = new byte[] {
-    					(byte)0x00, // Flags
-    					(byte)0x2B // Command: Get system information
-    				};
-    				byte[] systeminfo = nfcvTag.transceive(cmd);
+                sb.append('\n');
 
-    				// Chop off the initial 0x00 byte:
-    				systeminfo = Arrays.copyOfRange(systeminfo, 1, 15);
+                // Get an instance of NfcV for the given tag:
+                NfcV nfcvTag = NfcV.get(tag);
 
-    				// Read first 8 blocks containing the 32 byte of userdata defined in the Danish model
-    				cmd = new byte[] { 
-    					(byte)0x00, // Flags
-    					(byte)0x23, // Command: Read multiple blocks
-    					(byte)0x00, // First block (offset)
-    					(byte)0x08  // Number of blocks
-    				};
-    				byte[] userdata = nfcvTag.transceive(cmd);
+                try {                   
+                    nfcvTag.connect();
+                } catch (IOException e) {
+                    sb.append("Klarte ikke åpne en tilkobling!\n");
+                    return sb.toString();
+                }
+                
+                try {
 
-    				// Chop off the initial 0x00 byte:
-    				userdata = Arrays.copyOfRange(userdata, 1, 32);
+                    // Get system information (0x2B)
+                    byte[] cmd = new byte[] {
+                        (byte)0x00, // Flags
+                        (byte)0x2B // Command: Get system information
+                    };
+                    byte[] systeminfo = nfcvTag.transceive(cmd);
 
-    				// Parse the data using the DDMTag class:
-    				DDMTag danishTag = new DDMTag();
-    				danishTag.addSystemInformation(systeminfo);
-    				danishTag.addUserData(userdata);
-    				
-					ImageView iv1 = (ImageView) findViewById(R.id.imageView1);
-					iv1.setVisibility(View.VISIBLE);
+                    // Chop off the initial 0x00 byte:
+                    systeminfo = Arrays.copyOfRange(systeminfo, 1, 15);
 
-    				if (danishTag.isAFIsecured()) {
-    	    			iv1.setImageResource(R.drawable.lock_closed);
-    				} else {
-    	    			iv1.setImageResource(R.drawable.lock_open);
-    				}
+                    // Read first 8 blocks containing the 32 byte of userdata defined in the Danish model
+                    cmd = new byte[] { 
+                        (byte)0x00, // Flags
+                        (byte)0x23, // Command: Read multiple blocks
+                        (byte)0x00, // First block (offset)
+                        (byte)0x08  // Number of blocks
+                    };
+                    byte[] userdata = nfcvTag.transceive(cmd);
 
-    				textView1.setText(danishTag.Barcode());
-    		        textView2.setText(danishTag.Country());
-    		        textView3.setText(danishTag.ISIL());
+                    // Chop off the initial 0x00 byte:
+                    userdata = Arrays.copyOfRange(userdata, 1, 32);
 
-    		        // Show the go button
-    		        //goButton.setVisibility(View.VISIBLE);
-    		        currentBarcode = danishTag.Barcode();
-    		        
+                    // Parse the data using the DDMTag class:
+                    DDMTag danishTag = new DDMTag();
+                    danishTag.addSystemInformation(systeminfo);
+                    danishTag.addUserData(userdata);
+                    
+                    ImageView iv1 = (ImageView) findViewById(R.id.imageView1);
+                    iv1.setVisibility(View.VISIBLE);
+
+                    if (danishTag.isAFIsecured()) {
+                        iv1.setImageResource(R.drawable.lock_closed);
+                    } else {
+                        iv1.setImageResource(R.drawable.lock_open);
+                    }
+
+                    textView1.setText(danishTag.Barcode());
+                    textView2.setText(danishTag.Country());
+                    textView3.setText(danishTag.ISIL());
+
+                    // Show the go button
+                    //goButton.setVisibility(View.VISIBLE);
+                    currentBarcode = danishTag.Barcode();
+
                     url = "http://labs.biblionaut.net/basic_info/?strekkode=" + currentBarcode;
                     webview.loadUrl(url);
-    		        
-    			} catch (IOException e) {
-        			sb.append('\n');
-            		sb.append("Feil ved lesing");
-            		return sb.toString();
-        		}
-        		
-        		try {
-        			nfcvTag.close();
-        		} catch (IOException e) {
-        			sb.append('\n');
-            		sb.append("Klarte ikke lukke");
-            		return sb.toString();
-        		}
-        		sb.append("Tilkobling lukket\n");
-        		
-        	}
+
+                } catch (IOException e) {
+                    sb.append('\n');
+                    sb.append("Feil ved lesing");
+                    return sb.toString();
+                }
+
+                try {
+                    nfcvTag.close();
+                } catch (IOException e) {
+                    sb.append('\n');
+                    sb.append("Klarte ikke lukke");
+                    return sb.toString();
+                }
+                sb.append("Tilkobling lukket\n");
+                
+            }
 
         }
 
@@ -305,7 +307,19 @@ public class NfcBookReader extends Activity {
 
     @Override
     public void onNewIntent(Intent intent) {
+        Log.i(TAG, "Called onNewIntent");
         setIntent(intent);
         resolveIntent(intent);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.i(TAG, "Called onActivityResult");
+        /*if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+        if (data.hasExtra("returnKey1")) {
+          Toast.makeText(this, data.getExtras().getString("returnKey1"),
+              Toast.LENGTH_SHORT).show();
+        }*/
+    }
+
 }
