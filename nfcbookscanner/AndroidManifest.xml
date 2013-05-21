@@ -20,8 +20,16 @@
   android:versionName="0.1"
   android:installLocation="auto">
 
-    <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="17" />
+    <uses-sdk android:minSdkVersion="11" android:targetSdkVersion="17" />
 
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+    
     <uses-permission android:name="android.permission.NFC" />
     <uses-feature android:name="android.hardware.nfc" />
     
@@ -29,10 +37,12 @@
 
     <application
       android:label="@string/app_name"
+      android:icon="@drawable/scriptotek2"
+      android:theme="@style/SciptotekTheme"
       android:allowBackup="true">
 
         <activity
-          android:name="NfcBookReader"
+          android:name="MainActivity"
           android:label="@string/app_name"
           android:screenOrientation="nosensor"
           android:alwaysRetainTaskState="true"
@@ -42,7 +52,6 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <intent-filter>
                 <action android:name="android.nfc.action.TECH_DISCOVERED"/>
             </intent-filter>
@@ -50,9 +59,77 @@
               android:name="android.nfc.action.TECH_DISCOVERED"
               android:resource="@xml/nfc_tech_filter"
             />
+			<!-- 
+			<meta-data
+                android:name="android.app.default_searchable"
+                android:value=".SearchResultActivity" />
+                 -->
+        </activity>
+        
+        <activity android:name="SearchResultActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
 
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/search" />
         </activity>
 
-    </application>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/app_name" >
+
+        </activity>
+        
+        <!-- The authenticator service -->
+        <service
+            android:name=".authenticator.AuthenticationService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator" />
+        </service>
+
+        <!-- 
+        * Future idea: 
+        * Provide a ContentProvider to store current loans and
+        * a SyncService to keep them in sync
+
+        <service
+            android:name=".syncadapter.SyncService"
+            android:exported="true">
+            <intent-filter>
+                <action
+                    android:name="android.content.SyncAdapter" />
+            </intent-filter>
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/syncadapter" />
+         </service>
+		<provider
+		    android:name=".contentprovider.LoansProvider"
+		    android:authorities="no.scriptotek.bibsys.loans"
+		    android:exported="false"
+		    android:multiprocess="true" >
+		</provider>
+		-->
+		<activity
+            android:name=".authenticator.AuthenticatorActivity"
+            android:label="@string/ui_activity_title"
+            android:theme="@android:style/Theme.Dialog"
+            android:excludeFromRecents="true"
+            android:configChanges="orientation"
+            >
+            <!--
+                No intent-filter here! This activity is only ever launched by
+                someone who explicitly knows the class name
+            -->
+        </activity>
+
+	</application>
 
 </manifest> 

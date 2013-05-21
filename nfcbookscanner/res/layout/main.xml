@@ -14,21 +14,32 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<LinearLayout android:layout_width="match_parent"
+<RelativeLayout android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android">
 
-	<TextView
-	    android:id="@+id/textView1"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:gravity="center"
-	    android:padding="10dp"
-	    android:text="@string/intro_message"
-	    android:textAppearance="?android:attr/textAppearanceMedium"
-	    android:textStyle="italic" />
+    <LinearLayout
+        android:id="@+id/topArea"
+        android:orientation="vertical" 
+		android:layout_above="@+id/bottomArea"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent" >
+        
+		<Button
+		    android:id="@+id/loginButton"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="@string/refreshButtonLabel" />
 
+		<WebView
+		    android:id="@+id/web_engine"
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent" />
+
+	</LinearLayout>
 	<TableLayout
+	    android:id="@+id/bottomArea"
+        android:layout_alignParentBottom="true"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
 	    android:stretchColumns="2" >
@@ -55,7 +66,7 @@
 	            android:textAppearance="?android:attr/textAppearanceMedium" />
 
 	        <ImageView
-	            android:id="@+id/imageView1"
+	            android:id="@+id/lock_icon"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_gravity="right"
@@ -84,6 +95,15 @@
 	            android:textIsSelectable="true"
 	            android:textAppearance="?android:attr/textAppearanceMedium" />
 
+	        <TextView
+	            android:id="@+id/textView23"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:padding="3dp"
+	            android:layout_gravity="right"
+	            android:textIsSelectable="true"
+	            android:textAppearance="?android:attr/textAppearanceMedium" />
+	        
 	    </TableRow>
 
 	    <TableRow
@@ -107,20 +127,19 @@
 	            android:textIsSelectable="true"
 	            android:textAppearance="?android:attr/textAppearanceMedium" />
 
+			<TextView
+	            android:id="@+id/textView33"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:padding="3dp"
+	            android:layout_gravity="right"
+	            android:textIsSelectable="true"
+	            android:textAppearance="?android:attr/textAppearanceMedium" />
+	        
 	    </TableRow>
 	    
 
 	</TableLayout>
 
-	<Button
-	    android:id="@+id/goButton"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:text="@string/goButtonLabel" />
-
-	<WebView android:id="@+id/web_engine"  
-             android:layout_width="fill_parent"  
-             android:layout_height="fill_parent"  
-            />  
 	
-</LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <header
+        android:fragment="no.scriptotek.nfcbookscanner.SettingsActivity$GeneralPreferenceFragment"
+        android:title="@string/pref_header_general" />
+    <header
+        android:fragment="no.scriptotek.nfcbookscanner.SettingsActivity$NotificationPreferenceFragment"
+        android:title="@string/pref_header_notifications" />
+    
+    <!--  {packageName}.${activityClass} -->
+    <header
+        android:fragment="no.scriptotek.nfcbookscanner.SettingsActivity$DataSyncPreferenceFragment"
+        android:title="@string/pref_header_data_sync" />
+
+</preference-headers>
