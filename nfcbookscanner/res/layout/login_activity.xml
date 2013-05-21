@@ -46,17 +46,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/login_activity_username_label" />
+
             <EditText
                 android:id="@+id/username_edit"
-                android:singleLine="true"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:autoText="false"
+                android:capitalize="none"
+                android:inputType="textEmailAddress"
                 android:minWidth="250dip"
                 android:scrollHorizontally="true"
-                android:capitalize="none"
-                android:autoText="false"
-                android:inputType="textEmailAddress"
-                android:text="user" />
+                android:singleLine="true" />
+
             <TextView
                 android:id="@+id/username_fixed"
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -72,18 +73,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/login_activity_password_label" />
+
             <EditText
                 android:id="@+id/password_edit"
-                android:singleLine="true"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:minWidth="250dip"
-                android:scrollHorizontally="true"
-                android:capitalize="none"
                 android:autoText="false"
-                android:password="true"
+                android:capitalize="none"
                 android:inputType="textPassword"
-                android:text="test" />
+                android:minWidth="250dip"
+                android:password="true"
+                android:scrollHorizontally="true"
+                android:singleLine="true" />
+
             <TextView
                 android:id="@+id/message_bottom"
                 android:textAppearance="?android:attr/textAppearanceSmall"

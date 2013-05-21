@@ -55,10 +55,10 @@
 
     <!-- Title string for Login activity-->
     <string
-        name="ui_activity_title">Sign-in</string>
+        name="ui_activity_title">Logg inn</string>
     <!-- Message shown in progress dialog while app connects to the server -->
     <string
-        name="ui_activity_authenticating">Authenticating\u2026</string>
+        name="ui_activity_authenticating">Autentiserer\u2026</string>
 
     <!-- AuthenticatorActivity -->
     <skip />
@@ -74,25 +74,23 @@
 
     <!-- Message shown in dialog if the username or password is invalid. -->
     <string
-        name="login_activity_loginfail_text_both">The username or password isn\'t valid. A Sample SyncAdapter account is
-        required. Please try again. </string>
+        name="login_activity_loginfail_text_both">Brukernavnet eller passordet er ikke gyldig. Du bruker BIBSYS-kontoen, ikke UiO-kontoen din..?</string>
     <!-- Message shown in dialog if the password is invalid -->
     <string
-        name="login_activity_loginfail_text_pwonly">You entered the wrong password or your account has changed.
-        Please re-enter your password.</string>
+        name="login_activity_loginfail_text_pwonly">Du skrev feil passord, eller kontoen din har blitt endret. Vennligst skriv inn passordet på nytt.</string>
     <!-- Message shown in dialog to prompt the user for their password -->
     <string
-        name="login_activity_loginfail_text_pwmissing">Type the password for this account.</string>
+        name="login_activity_loginfail_text_pwmissing">Skriv inn passordet.</string>
     <!--
         Message shown if the provided account doesn't support the current
         activity.
     -->
     <string
-        name="login_activity_newaccount_text">Sign in to your Sample SyncAdapter account. </string>
+        name="login_activity_newaccount_text">Logg inn med din BIBSYS-konto (<a href="https://secure.bibsys.no/adgang/action/logon">Hæ??</a>).</string>
 
     <!-- Button that takes the user to the "sign in" screen -->
     <string
-        name="sign_in_button_label">Sign in</string>
+        name="sign_in_button_label">Logg inn</string>
     <!-- Button for going to the previous screen or step -->
     <string
         name="back_button_label">Back</string>

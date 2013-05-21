@@ -105,51 +105,8 @@ public class MainActivity extends Activity implements TaskListener {
         super.onCreate(savedInstanceState);
         Log.i(TAG, "Called onCreate");
         setContentView(R.layout.main);
-        
-        // Add dropdown to actionbar
-        OnNavigationListener mOnNavigationListener = new OnNavigationListener() {
-        	String[] strings = getResources().getStringArray(R.array.action_list);
-
-        	@Override
-        	public boolean onNavigationItemSelected(int position, long itemId) {
-        		Log.i(TAG, strings[position]);
-        		return true;
-        	}
-        };
-        SpinnerAdapter spinnerAdp = ArrayAdapter.createFromResource(this, 
-				R.array.action_list,
-		        android.R.layout.simple_spinner_dropdown_item);
-		ActionBar actionBar = getActionBar();
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-
-        AccountManager am = AccountManager.get(this); // "this" references the current Context
-    	String mPassword;
-        Account[] accounts = am.getAccountsByType("no.scriptotek.bibsys");
-
-        //Spinner spinner = (Spinner) findViewById();
-
-        for (int i=0; i < accounts.length; i++) {
-        	Log.i(TAG, accounts[i].name);
-        	mPassword = am.getPassword(accounts[i]);
-        	Log.i(TAG, mPassword);
-        
-        	ArrayList<String> arrayList1 = new ArrayList<String>();
-            arrayList1.add(accounts[i].name);
-            spinnerAdp = new ArrayAdapter<String> (this,android.R.layout.simple_spinner_dropdown_item,arrayList1);
-            //spinner.setAdapter(adp);
-
-        //mTagContent = (LinearLayout) findViewById(R.id.list);
-        }
-		actionBar.setListNavigationCallbacks(spinnerAdp, mOnNavigationListener);
-		actionBar.setDisplayShowTitleEnabled(false);
 
       	api = new BibsysApi(MainActivity.this);
-    	if (accounts.length > 0) {
-    		setWorking(true);
-    		api.login(accounts[0].name, am.getPassword(accounts[0]));
-    	} else {
-    		setWorking(false);    		
-    	}
         
         resolveIntent(getIntent());
 
@@ -179,6 +136,7 @@ public class MainActivity extends Activity implements TaskListener {
 
         ImageView lockIcon = (ImageView)findViewById(R.id.lock_icon);
         lockIcon.setClickable(true);
+        lockIcon.setVisibility(View.GONE);
         lockIcon.setOnClickListener(new OnClickListener() {
         	@Override
         	public void onClick(View v) {
@@ -212,9 +170,6 @@ public class MainActivity extends Activity implements TaskListener {
             } 
         });
         loginButton.setVisibility(View.GONE);
-
-        ImageView iv1 = (ImageView) findViewById(R.id.lock_icon);
-        iv1.setVisibility(View.GONE);
         
         mDialog = new AlertDialog.Builder(this).setNeutralButton("Ok", null).create();
 
@@ -321,10 +276,11 @@ public class MainActivity extends Activity implements TaskListener {
     @Override
     public void onLoggedIn(String result) {
         Log.i(TAG, "onLoggedIn");
-        api.new UserInfoTask().execute();
-        /*if (progressDialog != null) {
-            progressDialog.dismiss();
-        }*/
+        if (result == "") {
+        	Toast.makeText(this, "Innloggingen feilet. Sjekk kontoopplysningene", Toast.LENGTH_SHORT).show();
+        } else {
+        	api.new UserInfoTask().execute();
+        }
     }
 
     @Override
@@ -334,20 +290,19 @@ public class MainActivity extends Activity implements TaskListener {
         String patronid = "";
         try {
         	patronid = result.getString("patronid");
+        	String firstname = result.getString("firstname");
+        	Toast.makeText(this, "Innlogging vellykka. Hei " + firstname, Toast.LENGTH_SHORT).show();        	
         } catch (JSONException e) {
             e.printStackTrace();        	
         }
         Log.i(TAG, patronid);
-        /*if (progressDialog != null) {
-            progressDialog.dismiss();
-        }*/
     }
 
     /******************************************************************
      * Some standard callbacks
      */
 
-/*
+    /*
     @Override
     public void onBackPressed() {
         // do something on back.
@@ -393,6 +348,71 @@ public class MainActivity extends Activity implements TaskListener {
             mAdapter.disableForegroundDispatch(this);
             //mAdapter.disableForegroundNdefPush(this);
         }
+    }
+    
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i(TAG, "Called onStop");
+        
+    }
+    
+    private Account currentAccount = null;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.i(TAG, "Called onStart");
+        
+        AccountManager am = AccountManager.get(this); // "this" references the current Context
+    	String mPassword;
+        Account[] accounts = am.getAccountsByType("no.scriptotek.bibsys");
+
+        // Add dropdown to actionbar
+        OnNavigationListener mOnNavigationListener = new OnNavigationListener() {
+        	String[] strings = getResources().getStringArray(R.array.action_list);
+
+        	@Override
+        	public boolean onNavigationItemSelected(int position, long itemId) {
+        		Log.i(TAG, strings[position]);
+        		return true;
+        	}
+        };
+        
+        //Spinner spinner = (Spinner) findViewById();
+        SpinnerAdapter spinnerAdp = ArrayAdapter.createFromResource(this, 
+				R.array.action_list,
+		        android.R.layout.simple_spinner_dropdown_item);
+		ActionBar actionBar = getActionBar();
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+
+        for (int i=0; i < accounts.length; i++) {
+        	ArrayList<String> arrayList1 = new ArrayList<String>();
+            arrayList1.add(accounts[i].name);
+            spinnerAdp = new ArrayAdapter<String> (this,android.R.layout.simple_spinner_dropdown_item, arrayList1);
+            //spinner.setAdapter(adp);
+
+        //mTagContent = (LinearLayout) findViewById(R.id.list);
+        }
+		actionBar.setListNavigationCallbacks(spinnerAdp, mOnNavigationListener);
+		actionBar.setDisplayShowTitleEnabled(false);
+
+		if (currentAccount == null && accounts.length > 0) {
+            setWorking(true);
+        	Toast.makeText(this, "Logger inn som " + accounts[0].name, Toast.LENGTH_SHORT).show();
+            api.login(accounts[0].name, am.getPassword(accounts[0]));
+        } else if (currentAccount != null && accounts.length == 0) {
+        	// Vi bør fjerne kontoen fra menyen!
+        } else {
+            setWorking(false);        	
+        }
+        
+    }
+    
+    @Override
+    protected void onRestart() {
+        super.onStop();
+        Log.i(TAG, "Called onRestart");
     }
 
     private void showMessage(int title, int message) {

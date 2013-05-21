@@ -40,6 +40,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -120,6 +121,10 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
         mPasswordEdit = (EditText) findViewById(R.id.password_edit);
         if (!TextUtils.isEmpty(mUsername)) mUsernameEdit.setText(mUsername);
         mMessage.setText(getMessage());
+        
+        mMessage.setMovementMethod(LinkMovementMethod.getInstance());
+
+        
     }
 
     /*
