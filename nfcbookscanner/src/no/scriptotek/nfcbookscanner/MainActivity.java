@@ -274,10 +274,11 @@ public class MainActivity extends Activity implements TaskListener {
      */
 
     @Override
-    public void onLoggedIn(String result) {
+    public void onLoggedIn(String token) {
         Log.i(TAG, "onLoggedIn");
-        if (result == "") {
+        if (token == "") {
         	Toast.makeText(this, "Innloggingen feilet. Sjekk kontoopplysningene", Toast.LENGTH_SHORT).show();
+        	currentAccount = null;
         } else {
         	api.new UserInfoTask().execute();
         }
@@ -386,21 +387,21 @@ public class MainActivity extends Activity implements TaskListener {
 		ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 
+    	ArrayList<String> arrayList1 = new ArrayList<String>();
         for (int i=0; i < accounts.length; i++) {
-        	ArrayList<String> arrayList1 = new ArrayList<String>();
             arrayList1.add(accounts[i].name);
-            spinnerAdp = new ArrayAdapter<String> (this,android.R.layout.simple_spinner_dropdown_item, arrayList1);
             //spinner.setAdapter(adp);
-
         //mTagContent = (LinearLayout) findViewById(R.id.list);
         }
+        spinnerAdp = new ArrayAdapter<String> (this,android.R.layout.simple_spinner_dropdown_item, arrayList1);
 		actionBar.setListNavigationCallbacks(spinnerAdp, mOnNavigationListener);
 		actionBar.setDisplayShowTitleEnabled(false);
 
 		if (currentAccount == null && accounts.length > 0) {
             setWorking(true);
         	Toast.makeText(this, "Logger inn som " + accounts[0].name, Toast.LENGTH_SHORT).show();
-            api.login(accounts[0].name, am.getPassword(accounts[0]));
+        	currentAccount = accounts[0];
+        	api.login(accounts[0].name, am.getPassword(accounts[0]));
         } else if (currentAccount != null && accounts.length == 0) {
         	// Vi bør fjerne kontoen fra menyen!
         } else {
