@@ -1,6 +1,6 @@
 [submodule "libdanrfid"]
 	path = libdanrfid
-	url = https://code.google.com/p/libdanrfid
+	url = https://github.com/scriptotek/libdanrfid.git
 [submodule "www/lib/holo-web"]
 	path = www/lib/holo-web
 	url = https://github.com/zmyaro/holo-web.git
