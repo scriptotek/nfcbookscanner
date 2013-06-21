@@ -9,18 +9,18 @@
     <meta charset="utf-8" />
     <title>Grunnleggende bokinfo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="jquery-1.9.1.min.js"></script>
+    <script src="lib/jquery-1.9.1.min.js"></script>
     <!--<script src="bootstrap/js/bootstrap.min.js"></script>-->
-    <script type="text/javascript" src="main.js"></script> 
+    <script type="text/javascript" src="js/main.js"></script> 
 
-	<link rel="stylesheet" type="text/css" href="holo-web/holo-base-elements.css" />
-	<link rel="stylesheet" type="text/css" href="holo-web/holo-light-elements.css" />
+	<link rel="stylesheet" type="text/css" href="lib/holo-web/holo-base-elements.css" />
+	<link rel="stylesheet" type="text/css" href="lib/holo-web/holo-light-elements.css" />
         <!--
 
 <link rel="stylesheet" type="text/css" href="holo-web/holo-base-widgets.css" />
 		<link rel="stylesheet" type="text/css" href="holo-web/holo-dark-widgets.css" />
 -->		
-		<script type="text/javascript" src="holo-web/holo-touch.js"></script>
+		<script type="text/javascript" src="lib/holo-web/holo-touch.js"></script>
 		
 		<meta name="viewport" content="width=device-width, initial-scale=1.2, minimum-scale=1.2, maximum-scale=1.2, user-scalable=yes" />
 
