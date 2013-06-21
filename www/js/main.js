@@ -87,7 +87,7 @@
         console.log(book);
         $('#msg').html('');
         if (book.thumb) {
-            $('#msg').append('<img src="' + book.thumb + '" style="float:right; max-width: 25%;">');
+            $('#msg').append('<div class="zoomTarget" data-closeclick="true" style="float:right; max-width:25%;"><img src="' + book.thumb + '" class="magnify" style="width: 100%;" /></div>');
         }
         $('#msg').append('<a href="http://ask.bibsys.no/ask/action/show?pid=' + book.objektid + '&kid=biblio"><strong>' + book.title + ' ' + book.subtitle + '</strong></a> (' + book.year + ')<br />');
 
@@ -119,6 +119,7 @@
             }
             $('#msg').append('Emner: ' + subjects.join(', ') + '<br />');
         }
+        $(".zoomTarget").zoomTarget();
     }
 
     function show_object_info() {

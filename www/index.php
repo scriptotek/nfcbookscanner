@@ -10,11 +10,15 @@
     <title>Grunnleggende bokinfo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="lib/jquery-1.9.1.min.js"></script>
-    <!--<script src="bootstrap/js/bootstrap.min.js"></script>-->
+    <script src="lib/zoomooz/jquery.zoomooz.min.js"></script>
+    <!--
+    <script src="lib/jquery.magnifier.js"></script>
+    --><!--<script src="bootstrap/js/bootstrap.min.js"></script>-->
     <script type="text/javascript" src="js/main.js"></script> 
 
 	<link rel="stylesheet" type="text/css" href="lib/holo-web/holo-base-elements.css" />
 	<link rel="stylesheet" type="text/css" href="lib/holo-web/holo-light-elements.css" />
+	<link rel="stylesheet" type="text/css" href="css/site.css" />
         <!--
 
 <link rel="stylesheet" type="text/css" href="holo-web/holo-base-widgets.css" />
@@ -53,13 +57,15 @@ font-family: roboto;
 </head>
 <body>
 
-	<div id="msg"></div>
+    <div style="padding:10px;">
+      <div id="msg"></div>
 
     <div style="border-top: 1px solid #aaa; margin-top: 20px; padding-top: 10px;"/>
     <div class="holo-buttons">
         <button class="holo-button">Lån</button>
         <button class="holo-button">Husk</button>
         <button class="holo-button">Stjel</button>
+    </div>
     </div>
 
 </body> 

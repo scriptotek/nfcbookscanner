@@ -4,3 +4,6 @@
 [submodule "www/lib/holo-web"]
 	path = www/lib/holo-web
 	url = https://github.com/zmyaro/holo-web.git
+[submodule "www/lib/zoomooz"]
+	path = www/lib/zoomooz
+	url = https://github.com/jaukia/zoomooz.git
