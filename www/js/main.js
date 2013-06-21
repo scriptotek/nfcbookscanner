@@ -62,7 +62,7 @@
         object_info.klass = book.klass ? book.klass : [];
         object_info.subjects = book.subjects ? book.subjects : [];
 
-        $.getJSON('http://labs.biblionaut.net/services/content.php?isbn=' + isbn)
+        $.getJSON('//biblionaut.net/services/content.php?callback=?&isbn=' + isbn)
                     .success(contentSuccess)
                     .error(contentError);
     }
@@ -138,12 +138,16 @@
             strekkode = strekkode[0];
             object_info = {};
             object_info.barcode = strekkode
+
+            var data = { 
+                'id': object_info.barcode
+            };
             $('#msg').html('Sjekker ' + object_info.barcode + '...<br />');
-            $.getJSON('/services/getids.php?id=' + object_info.barcode, function(response) {
+            $.getJSON('//biblionaut.net/services/getids.php?callback=?', data, function(response) {
                 object_info.objektid = response.objektid
                 $('#msg').append('Objektid: ' + object_info.objektid + '<br />');
                 if (object_info.objektid.length === 9) {
-                    $.getJSON('/services/sru_iteminfo.php?objektid=' + object_info.objektid)
+                    $.getJSON('//biblionaut.net/services/sru_iteminfo.php?callback=?&objektid=' + object_info.objektid)
                         .success(sruItemInfoSuccess)
                         .error(sruItemInfoError);
                 }
