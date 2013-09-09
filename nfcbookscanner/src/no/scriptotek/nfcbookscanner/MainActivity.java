@@ -35,15 +35,17 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.annotation.TargetApi;
+
 
 import no.scriptotek.nfcbookscanner.R;
 
 import org.rfid.libdanrfid.DDMTag;
-
 
 public class MainActivity extends Activity {
 
@@ -54,7 +56,7 @@ public class MainActivity extends Activity {
 
     private AlertDialog mDialog;
 
-    String url = "http://labs.biblionaut.net/basic_info/";
+    String url = "file:///android_asset/www/index.html";
     
     String currentBarcode = "";
     Intent i = new Intent(Intent.ACTION_VIEW);
@@ -64,6 +66,12 @@ public class MainActivity extends Activity {
     boolean isWorking = true;
 
     private Menu optionsMenu;
+    
+    //Wrapping in its own function to prevent warnings
+    @TargetApi(16)
+    protected void enableUniversalAccess(WebSettings settings) {
+         settings.setAllowUniversalAccessFromFileURLs(true);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,11 +82,19 @@ public class MainActivity extends Activity {
         resolveIntent(getIntent());
 
         webview = (WebView) findViewById(R.id.web_engine);
-        webview.getSettings().setJavaScriptEnabled(true);
-        final Activity activity = this;
-
+        WebSettings settings = webview.getSettings();
+        settings.setJavaScriptEnabled(true);
         //webview.addJavascriptInterface(this, "JSInterface");
+        
+        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
+            // Allow JavaScript running in the context of a file scheme URL 
+        	// to access content from any origin.
+        	// The default value is true for API level ICE_CREAM_SANDWICH_MR1 and below, 
+        	// and false for API level JELLY_BEAN and above
+            enableUniversalAccess(settings);
+        }
 
+        final Activity activity = this;
         webview.setWebViewClient(new WebViewClient() {
           public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
             Toast.makeText(activity, "Oh no! " + description, Toast.LENGTH_SHORT).show();
