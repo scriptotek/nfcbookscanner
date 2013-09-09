@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <string-array name="action_list">
-        <item>Ikke logget inn</item>
-        <item>Logg inn som...</item>
-    </string-array>
-    
-</resources>
