@@ -18,31 +18,12 @@
   android:layout_height="match_parent"
   android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
-        android:id="@+id/topArea"
-        android:orientation="vertical" 
-		android:layout_above="@+id/bottomArea"
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent" >
-        
-		<Button
-		    android:id="@+id/loginButton"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:text="@string/refreshButtonLabel" />
-
-		<WebView
-		    android:id="@+id/web_engine"
-		    android:layout_width="fill_parent"
-		    android:layout_height="fill_parent" />
-
-	</LinearLayout>
-	<TableLayout
-	    android:id="@+id/bottomArea"
-        android:layout_alignParentBottom="true"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:stretchColumns="2" >
+   	<TableLayout
+   	    android:id="@+id/topArea"
+   	    android:layout_width="fill_parent"
+   	    android:layout_height="wrap_content"
+   	    android:layout_alignParentTop="true"
+   	    android:stretchColumns="2" >
 
 	    <TableRow
 	        android:id="@+id/tableRow1"
@@ -138,8 +119,36 @@
 	        
 	    </TableRow>
 	    
-
 	</TableLayout>
 
+   	<LinearLayout
+   	     android:id="@+id/midArea"
+   	     android:layout_width="fill_parent"
+   	     android:layout_height="wrap_content"
+   	     android:layout_below="@+id/topArea"
+   	     android:orientation="vertical" >
+
+   	     <Button
+   	         android:id="@+id/refreshButton"
+   	         android:layout_width="wrap_content"
+   	         android:layout_height="wrap_content"
+   	         android:text="Last inn på nytt" />
+
+	</LinearLayout>
+   	
+   	 <LinearLayout
+   	     android:id="@+id/bottomArea"
+   	     android:layout_width="fill_parent"
+   	     android:layout_height="fill_parent"
+   	     android:layout_below="@+id/midArea"
+   	     android:orientation="vertical" >
+
+   	     <WebView
+   	         android:id="@+id/web_engine"
+   	         android:layout_width="fill_parent"
+   	         android:layout_height="fill_parent" />
+
+	</LinearLayout>
+   	
 	
 </RelativeLayout>

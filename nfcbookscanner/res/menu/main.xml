@@ -1,25 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <!-- 
-    * Future idea: 
-    * Search library catalogue directly from action bar?
-    
-    <item
-        android:id="@+id/action_search"
-        android:orderInCategory="100"
-        android:showAsAction="always"
-        android:title="@string/action_search"
-        android:actionViewClass="android.widget.SearchView"/>
-	 -->
-
-     <item android:id="@+id/progressbar"
-        android:orderInCategory="120"
-        android:showAsAction="always"
-        android:actionLayout="@layout/actionbar_progress"
-        />
-
-     <item android:id="@+id/settings"
-          android:title="@string/settings" />
-     
 </menu>
