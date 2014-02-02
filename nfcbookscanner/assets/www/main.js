@@ -43,11 +43,11 @@ var App = function() {
         object_info.year = response.year ? response.year : '';
         object_info.pages = response.pages ? response.pages : '';
         object_info.added_author = response.added_author ? response.added_author : '';
-        object_info.klass = response.klass ? response.klass : [];
+        object_info.classifications = response.classifications ? response.classifications : [];
         object_info.subjects = response.subjects ? response.subjects : [];
 
         if (response.isbn) {
-            $.getJSON('http://labs.biblionaut.net/services/content.php?isbn=' + object_info.isbn[0])
+            $.getJSON('http://services.biblionaut.net/content.php?isbn=' + object_info.isbn[0])
                 .success(contentInfoSuccess)
                 .error(error);
         } else {
@@ -101,10 +101,10 @@ var App = function() {
             $('#msg').append('ISBN: <a href="' + url + '">' + book.isbn + '</a><br />');
         }
 
-        if (book.klass !== undefined) {
+        if (book.classifications !== undefined) {
             var klasses = [];
-            for (var i = 0; i < book.klass.length; i++) {
-                klasses.push(book.klass[i].kode); 
+            for (var i = 0; i < book.classifications.length; i++) {
+                klasses.push(book.classifications[i].number + ' <small>('+book.classifications[i].system + ')</small>'); 
             }
             $('#msg').append('Klass: ' + klasses.join(', ') + '<br />');
         }
@@ -112,7 +112,7 @@ var App = function() {
         if (book.subjects !== undefined) {
             var subjects = [];
             for (var i = 0; i < book.subjects.length; i++) {
-                subjects.push(book.subjects[i].emne + ' <small>('+book.subjects[i].system + ')</small>'); 
+                subjects.push(book.subjects[i].term + ' <small>('+book.subjects[i].system + ')</small>'); 
             }
             $('#msg').append('Emner: ' + subjects.join(', ') + '<br />');
         }
@@ -130,12 +130,12 @@ var App = function() {
         object_info.barcode = strekkode
 
         $('#msg').html('Henter objektid for ' + object_info.barcode + '...<br />');
-        $.getJSON('http://labs.biblionaut.net/services/getids.php?id=' + object_info.barcode, function(response) {
+        $.getJSON('http://services.biblionaut.net/getids.php?id=' + object_info.barcode, function(response) {
             object_info.objektid = response.objektid
 
             $('#msg').append('Henter metadata for objekt ' + object_info.objektid + '...<br />');
             if (object_info.objektid.length === 9) {
-                $.getJSON('http://labs.biblionaut.net/services/sru_iteminfo.php?objektid=' + object_info.objektid)
+                $.getJSON('http://services.biblionaut.net/sru_iteminfo.php?objektid=' + object_info.objektid)
                     .success(sruItemInfoSuccess)
                     .error(error);
             }
