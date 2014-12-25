@@ -1,6 +1,6 @@
-[submodule "libdanrfid"]
-	path = libdanrfid
+[submodule "libs/libdanrfid"]
+	path = libs/libdanrfid
 	url = https://github.com/scriptotek/libdanrfid.git
-[submodule "nfcbookscanner/assets/www/holo-web"]
-	path = nfcbookscanner/assets/www/holo-web
+[submodule "app/src/main/assets/www/holo-web"]
+	path = app/src/main/assets/www/holo-web
 	url = https://github.com/zmyaro/holo-web.git

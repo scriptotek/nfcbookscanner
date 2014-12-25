@@ -1,5 +1,14 @@
 proguard.cfg
-default.properties
-bin/
-gen/
+*.properties
 *.DS_Store
+build
+*.log
+.classpath
+.project
+*.ipr
+*.iws
+*.iml
+.settings
+.gradle
+.idea
+gradle

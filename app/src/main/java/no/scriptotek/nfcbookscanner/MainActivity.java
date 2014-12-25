@@ -15,37 +15,34 @@
  */
 package no.scriptotek.nfcbookscanner;
 
-import java.io.IOException;
-import java.util.Arrays;
-
-import android.util.Log;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.NfcV;
 import android.os.Bundle;
-import android.widget.TextView;
-import android.widget.ImageView;
-import android.content.Context;
-import android.net.Uri;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.Toast;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.view.KeyEvent;
-import android.view.Menu;
-import android.annotation.TargetApi;
-
-
-import no.scriptotek.nfcbookscanner.R;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.rfid.libdanrfid.DDMTag;
+
+import java.io.IOException;
+import java.util.Arrays;
 
 public class MainActivity extends Activity {
 

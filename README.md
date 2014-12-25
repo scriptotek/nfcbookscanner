@@ -11,9 +11,15 @@ Only reading tags is demonstrated, but writing could easily be implemented as we
 method used for reading. The necessary ISO 15693 commands can be found 
 e.g. [here](http://www.ti.com/lit/an/sloa141/sloa141.pdf).
 
-To import this project into Eclipse/ADT, use `File→Import…`, and then either `Android→Existing Android Code Into Workspace` 
-to add your local copy or `Git→Projects from Git` to grab it right off GitHub. 
+<s>To import this project into Eclipse/ADT, use `File→Import…`, and then either `Android→Existing Android Code Into Workspace`  to add your local copy or `Git→Projects from Git` to grab it right off GitHub. </s>
 
-If you clone the repo from the command line, don't forget to `git submodule init; git submodule update` to  get the libdanrfid submodule. 
+Update: The project has been rewritten to work with Android Studio. 
+
+If you clone the repo from the command line, remember to fetch submodules:
+
+```bash
+git submodule init
+git submodule update
+```
 
 ![Screenshot](https://dl.dropboxusercontent.com/u/1007809/Screenshot_2013-09-09-17-50-57.png)
