@@ -9,7 +9,7 @@ from the library catalogue.
 Only reading tags is demonstrated, but writing could easily be implemented as well using the same
 [android.nfc.tech.NfcV.transceive](http://developer.android.com/reference/android/nfc/tech/NfcV.html#transceive%28byte%5B%5D%29)
 method used for reading. The necessary ISO 15693 commands can be found 
-e.g. [here](http://www.ti.com/lit/an/sloa141/sloa141.pdf).
+in for example [11-06-26-009 : TRF7960 Evaluation Module ISO 15693 Host Commands](http://www.ti.com/lit/an/sloa141/sloa141.pdf).
 
 <s>To import this project into Eclipse/ADT, use `File→Import…`, and then either `Android→Existing Android Code Into Workspace`  to add your local copy or `Git→Projects from Git` to grab it right off GitHub. </s>
 
